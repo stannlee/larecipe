@@ -5,16 +5,18 @@ namespace BinaryTorch\LaRecipe\Commands;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Symfony\Component\Process\Process;
+use BinaryTorch\LaRecipe\Traits\RunProcess;
 
 class ThemeCommand extends Command
 {
+    use RunProcess;
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'larecipe:theme {name}';
+    protected $signature = 'larecipe:theme {name} {--R|remove}';
 
     /**
      * The console command description.
@@ -32,6 +34,12 @@ class ThemeCommand extends Command
     {
         if (! $this->hasValidNameArgument()) {
             return;
+        }
+
+        if ($this->option('remove')) {
+          $this->removeTheme();
+          $this->info('Successfully removed LaRecipe theme.');
+          return;
         }
 
         (new Filesystem)->copyDirectory(
@@ -116,27 +124,7 @@ class ThemeCommand extends Command
      */
     protected function composerUpdate()
     {
-        $this->runCommand('composer update', getcwd());
-    }
-
-    /**
-     * Run the given command as a process.
-     *
-     * @param  string  $command
-     * @param  string  $path
-     * @return void
-     */
-    protected function runCommand($command, $path)
-    {
-        $process = (new Process($command, $path))->setTimeout(null);
-
-        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
-            $process->setTty(true);
-        }
-
-        $process->run(function ($type, $line) {
-            $this->output->write($line);
-        });
+        $this->runProcess('composer update', getcwd());
     }
 
     /**
@@ -250,5 +238,16 @@ class ThemeCommand extends Command
         foreach ($this->stubsToRename() as $stub) {
             (new Filesystem)->move($stub, str_replace('.stub', '.php', $stub));
         }
+    }
+
+    /**
+     * Remove the theme specified by vendor-name/theme
+     *
+     * @return void
+     */
+    protected function removeTheme()
+    {
+      $this->runProcess('composer remove '.$this->argument('name'), getcwd());
+      (new Filesystem)->deleteDirectory($this->themePath());
     }
 }

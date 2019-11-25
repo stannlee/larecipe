@@ -46,8 +46,6 @@
             <link rel="stylesheet" href="{{ route('larecipe.styles', $name) }}">
         @endforeach
 		
-		<!-- Base url -->
-		<base href="{{ Config::get('app.url') }}/" />
     </head>
     <body>
         <div id="app" v-cloak>
@@ -63,6 +61,12 @@
 
         <script>
             window.config = @json([]);
+        </script>
+
+        <script type="text/javascript">
+            if(localStorage.getItem('larecipeSidebar') == null) {
+                localStorage.setItem('larecipeSidebar', !! {{ config('larecipe.ui.show_side_bar') ?: 0 }});
+            }
         </script>
 
         <script src="{{ larecipe_assets('js/app.js') }}"></script>

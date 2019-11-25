@@ -22,6 +22,10 @@ class DocumentationController extends Controller
 
         if (config('larecipe.settings.auth')) {
             $this->middleware(['auth']);
+        }else{
+            if(config('larecipe.settings.middleware')){
+                $this->middleware(config('larecipe.settings.middleware'));
+            }
         }
     }
 
@@ -52,7 +56,7 @@ class DocumentationController extends Controller
     public function show($version, $page = null)
     {
         $documentation = $this->documentationRepository->get($version, $page);
-
+        
         if (Gate::has('viewLarecipe')) {
             $this->authorize('viewLarecipe', $documentation);
         }

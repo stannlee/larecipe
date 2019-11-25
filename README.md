@@ -53,11 +53,14 @@ Visit your app domain with `/docs` endpoint. That's it.
 
 ## Examples
 
-* [Zino](https://zino.saleemhadad.me/docs/1.0/installation) - 🤖 Custom Arduino library made for humans.
+* [Zino](https://zino.binarytorch.com.my/1.0/installation) - 🤖 Custom Arduino library made for humans.
 * [Blogged](https://blogged.binarytorch.com.my/docs/1.0/overview) - Blogged is a package provides an easy way to create beautiful blog inside your Laravel projects.
 * [Wave](https://wave.devdojo.com/docs) - Wave is the perfect starter kit for building your next great idea
 * [Inspector](https://www.inspector.dev/larecipe-is-now-our-docs-center/) - Laravel real-time performance & error alerting
 * [Nova ADC](https://nova-adc.com/docs/1.0/overview) - Nova is a cloud-based (or on-premise) SaaS application delivery controller.
+* [WooSignal](https://woosignal.com/docs/api/1.0/overview) - Fastest WooCommerce
+App Templates.
+* [AddChat](https://addchat-docs.classiebit.com/docs/1.0/introduction) - All-in-one multi-purpose Chat Widget For Laravel & Codeigniter websites.
 * Put your docs here 😍👌
 
 
@@ -74,6 +77,10 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 <a href="https://github.com/mrgfrederic" target="_blank">
     <img width="100px" height="100px" src="https://avatars0.githubusercontent.com/u/42940842?s=460&v=4">
+</a>
+
+<a href="https://cierra.de/" target="_blank">
+    <img width="200px" src="https://images.opencollective.com/cierrasoftware/1c2b298/logo.png">
 </a>
 
 

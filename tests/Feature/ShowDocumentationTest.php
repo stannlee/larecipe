@@ -88,4 +88,42 @@ class ShowDocumentationTest extends TestCase
 
         $this->get('/docs/1.0')->assertStatus(403);
     }
+
+    /** @test
+     * @author wgoldstein@planelogix.com
+     */
+    public function only_auth_user_can_visit_docs_if_auth_middleware_is_set()
+    {
+        //set middleware to 'auth' to simulate auth only access
+        Config::set('larecipe.settings.middleware', ['auth']);
+
+        $this->get('/docs/1.0')->assertRedirect('login');
+    }
+
+    /** @test
+     * @author wgoldstein@planelogix.com
+     */
+    public function auth_or_public_user_can_visit_docs_if_web_middleware_is_set()
+    {
+        // set the docs path and landing
+        Config::set('larecipe.docs.path', 'tests/views/docs');
+        Config::set('larecipe.docs.landing', 'foo');
+
+        Config::set('larecipe.settings.middleware', ['web']);
+
+        $this->get('/docs/1.0')->assertOk();
+    }
+
+    /** @test */
+    public function relative_anchor_link_support()
+    {
+        // set the docs path and landing
+        Config::set('larecipe.docs.path', 'tests/views/docs');
+        Config::set('larecipe.docs.landing', 'anchor');
+
+        $this->get('/docs/1.0')
+            ->assertStatus(200)
+            ->assertSee('/docs/1.0#foo')
+            ->assertSee('/docs/1.0#bar');
+    }
 }
